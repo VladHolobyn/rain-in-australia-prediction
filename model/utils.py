@@ -30,7 +30,13 @@ def plot_missing_values_bar(data):
 
     plt.show()
 
-def custom_label_encoding(column):
-    unique_values = column.unique()
-    label_encoding = {val: idx for idx, val in enumerate(unique_values)}
-    return column.map(label_encoding)
+class CustomLabelEncoder:
+    def __init__(self):
+        self.label_encoding = {}
+
+    def fit(self, column):
+        unique_values = column.unique()
+        self.label_encoding = {val: idx for idx, val in enumerate(unique_values)}
+
+    def transform(self, column):
+        return column.map(self.label_encoding)
