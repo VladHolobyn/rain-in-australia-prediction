@@ -1,31 +1,34 @@
-from numpy import log, dot, e
-from numpy.random import rand
+import numpy as np
 
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
 
-class LogisticRegression:
+class LogisticRegression():
 
-    def sigmoid(self, z):
-        return 1 / (1 + e ** (-z))
+    def __init__(self, lr=0.001, n_iters=1000):
+        self.lr = lr
+        self.n_iters = n_iters
+        self.weights = None
+        self.bias = None
 
-    def cost_function(self, X, y, weights):
-        z = dot(X, weights)
-        predict_1 = y * log(self.sigmoid(z))
-        predict_0 = (1 - y) * log(1 - self.sigmoid(z))
-        return -sum(predict_1 + predict_0) / len(X)
+    def fit(self, X, y):
+        n_samples, n_features = X.shape
+        self.weights = np.zeros(n_features)
+        self.bias = 0
 
-    def fit(self, X, y, epochs=25, lr=0.05):
-        loss = []
-        weights = rand(X.shape[1])
-        N = len(X)
+        for _ in range(self.n_iters):
+            linear_pred = np.dot(X, self.weights) + self.bias
+            predictions = sigmoid(linear_pred)
 
-        for _ in range(epochs):
-            y_hat = self.sigmoid(dot(X, weights))
-            weights -= lr * dot(X.T, y_hat - y) / N
-            loss.append(self.cost_function(X, y, weights))
+            dw = (1/n_samples) * np.dot(X.T, (predictions - y))
+            db = (1/n_samples) * np.sum(predictions-y)
 
-        self.weights = weights
-        self.loss = loss
+            self.weights = self.weights - self.lr*dw
+            self.bias = self.bias - self.lr*db
+
 
     def predict(self, X):
-        z = dot(X, self.weights)
-        return [1 if i > 0.5 else 0 for i in self.sigmoid(z)]
+        linear_pred = np.dot(X, self.weights) + self.bias
+        y_pred = sigmoid(linear_pred)
+        class_pred = [0 if y<=0.5 else 1 for y in y_pred]
+        return class_pred
