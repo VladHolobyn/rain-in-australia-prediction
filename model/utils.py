@@ -32,6 +32,25 @@ def plot_missing_values_bar(data):
 
 class CustomLabelEncoder:
     def __init__(self):
+<<<<<<< HEAD
+        self.label_encodings = {}
+
+    def fit(self, dataframe, columns=None):
+        if columns is None:
+            columns = dataframe.columns
+
+        for column in columns:
+            unique_values = dataframe[column].unique()
+            label_encoding = {val: idx for idx, val in enumerate(unique_values)}
+            self.label_encodings[column] = label_encoding
+
+    def transform(self, dataframe):
+        transformed_dataframe = dataframe.copy()
+        for column in dataframe.columns:
+            if column in self.label_encodings:
+                transformed_dataframe[column] = dataframe[column].map(self.label_encodings[column])
+        return transformed_dataframe
+=======
         self.label_encoding = {}
 
     def fit(self, column):
@@ -40,3 +59,4 @@ class CustomLabelEncoder:
 
     def transform(self, column):
         return column.map(self.label_encoding)
+>>>>>>> 711428edde3fe9706d5962edf26e0b03c34e99d9
