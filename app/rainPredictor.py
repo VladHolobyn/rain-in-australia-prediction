@@ -1,23 +1,35 @@
 import streamlit as st
 from additional_info import locations, directions
+import pickle
+import sys
+
+sys.path.append('../')
+
+with open("pkl/model.pkl", 'rb') as file:
+    loaded_model = pickle.load(file)
 
 
 class Form:
     def __init__(self):
         self.location = st.selectbox('Location 🌏', options=locations)
-        self.minTemp = st.number_input('🌡️ The minimum temperature in degrees celsius', min_value=-100.0, max_value=100.0,
+        self.minTemp = st.number_input('🌡️ The minimum temperature in degrees celsius', min_value=-100.0,
+                                       max_value=100.0,
                                        value=0.0, step=1.0)
-        self.maxTemp = st.number_input(' 🌡️The maximum temperature in degrees celsius', min_value=-100.0, max_value=100.0,
+        self.maxTemp = st.number_input(' 🌡️The maximum temperature in degrees celsius', min_value=-100.0,
+                                       max_value=100.0,
                                        value=0.0, step=1.0)
-        self.rainfall = st.number_input('⛈️ The amount of rainfall recorded for the day in mm', min_value=0.0, value=0.0,
+        self.rainfall = st.number_input('⛈️ The amount of rainfall recorded for the day in mm', min_value=0.0,
+                                        value=0.0,
                                         step=0.1)
 
-        self.sunshine = st.number_input('⛈️ The number of hours of bright sunshine in the day', min_value=0.0, value=0.0,
+        self.sunshine = st.number_input('⛈️ The number of hours of bright sunshine in the day', min_value=0.0,
+                                        value=0.0,
                                         step=0.1)
         self.windGustDir = st.selectbox('🌪️ The direction of the strongest wind gust in the 24 hours to midnight',
                                         options=directions)
-        self.windGustSpeed = st.number_input('🌪️ The speed (km/h) of the strongest wind gust in the 24 hours to midnight',
-                                             min_value=0.0, value=0.0, step=0.1)
+        self.windGustSpeed = st.number_input(
+            '🌪️ The speed (km/h) of the strongest wind gust in the 24 hours to midnight',
+            min_value=0.0, value=0.0, step=0.1)
         self.windDir9am = st.selectbox('💨 Direction of the wind at 9am', options=directions)
         self.windDir3pm = st.selectbox('💨 Direction of the wind at 3pm', options=directions)
         self.windSpeed9am = st.number_input('🌬 Wind speed (km/hr) averaged over 10 minutes prior to 9am', min_value=0.0,
@@ -26,9 +38,11 @@ class Form:
                                             value=0.0, step=0.1)
         self.humidity9am = st.number_input('💦 Humidity (percent) at 9am', min_value=0.0, value=0.0, step=0.1)
         self.humidity3pm = st.number_input('💦 Humidity (percent) at 3pm', min_value=0.0, value=0.0, step=0.1)
-        self.pressure9am = st.number_input('💭 Atmospheric pressure (hpa) reduced to mean sea level at 9am', min_value=0.0,
+        self.pressure9am = st.number_input('💭 Atmospheric pressure (hpa) reduced to mean sea level at 9am',
+                                           min_value=0.0,
                                            value=0.0, step=0.1)
-        self.pressure3pm = st.number_input('💭 Atmospheric pressure (hpa) reduced to mean sea level at 3pm', min_value=0.0,
+        self.pressure3pm = st.number_input('💭 Atmospheric pressure (hpa) reduced to mean sea level at 3pm',
+                                           min_value=0.0,
                                            value=0.0, step=0.1)
         self.cloud9am = st.number_input('🌫 Fraction of sky (oktas) obscured by cloud at 9am', min_value=0, max_value=8,
                                         value=0, step=1)
