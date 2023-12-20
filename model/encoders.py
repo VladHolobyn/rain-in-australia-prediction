@@ -15,4 +15,3 @@ class LabelEncoder:
     def fit_transform(self, arr, label):
         self.fit(arr, label)
         return self.transform(arr, label)
-    
