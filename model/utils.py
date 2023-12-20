@@ -31,11 +31,6 @@ def plot_missing_values_bar(data):
 
     plt.show()
 
-def custom_label_encoding(column):
-    unique_values = column.unique()
-    label_encoding = {val: idx for idx, val in enumerate(unique_values)}
-    return column.map(label_encoding)
-
 def train_test_split(X, y, test_size, random_state):
     if random_state is not None:
         random.seed(random_state)
