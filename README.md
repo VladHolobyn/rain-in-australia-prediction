@@ -50,4 +50,4 @@ streamlit run run.py
 
 
 ## Preview 
-![Preview](app/screenshots/preview.png)
+![image](https://github.com/VladHolobyn/rain-in-australia-prediction/assets/125756054/6b29e500-1abe-4053-9f9a-232539b5a4a7)
