@@ -32,3 +32,8 @@ class LogisticRegression():
         y_pred = sigmoid(linear_pred)
         class_pred = [0 if y<=0.5 else 1 for y in y_pred]
         return class_pred
+    
+    def predict_prob(self, X):
+        linear_pred = np.dot(X, self.weights) + self.bias
+        return sigmoid(linear_pred)
+    
